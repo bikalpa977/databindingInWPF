@@ -1,0 +1,76 @@
+﻿<Window x:Class="databinding.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:databinding"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="300" Width="300">
+    <Grid>
+
+        <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="3" x:Name="MyDatagrid" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="BorderBrush" Value="Gray"></Setter>
+                    <Setter Property="BorderThickness" Value="1,1,1,1"></Setter>
+                    <Setter Property="FontSize" Value="20"/>
+                </Style>
+
+            </ListView.ItemContainerStyle>
+
+            <ListView.View>
+                <GridView >
+                   
+                    <GridViewColumn Header="ID" Width="{Binding ElementName=idfield, Path=ActualWidth}" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding MyClassId}"  Style="{StaticResource GridCell}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="First Name" Width="{Binding ElementName=firstnamefield, Path=ActualWidth}"  >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox IsEnabled="False" Tag="{Binding MyClassId}" Text="{Binding FirstName}" Style="{StaticResource GridEditableCell}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="LastName"  Width="{Binding ElementName=lastnamefield, Path=ActualWidth}" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox IsEnabled="False" Tag="{Binding MyClassId}" Text="{Binding LastName}" Style="{StaticResource GridEditableCell}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Price" Width="{Binding ElementName=buttonfield, Path=ActualWidth}" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Edit" Tag="{Binding MyClassId}"  Click="btnEdit_Click" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <!--This is the hidden helper Grid which does the resizing -->
+        <Grid Visibility="Hidden">
+            <Grid.ColumnDefinitions>
+                <!--Width is bound to width of the first GridViewColumn -->
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="40*"/>
+                <ColumnDefinition Width="40*"/>
+                <ColumnDefinition Width="10*"/>
+                <!--Width is set to "Fill"-->
+
+            </Grid.ColumnDefinitions>
+            <!--This is the hidden helper Field which is used to bind to, using the "Fill" column of the helper grid-->
+            <Grid Grid.Column="0" x:Name="idfield"/>
+            <Grid Grid.Column="1" x:Name="firstnamefield"/>
+            <Grid Grid.Column="2" x:Name="lastnamefield"/>
+            <Grid Grid.Column="3" x:Name="buttonfield"/>
+        </Grid>
+    </Grid>
+
+
+</Window>
